@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <h1>Trending News</h1>
+
+
+    <form action="#">
+        <select name="category" id="category">
+            <option value="all"> All </option>
+            <option value="science"> Science </option>
+            <option value="politics"> Politics</option>
+        </select>
+        <input type="submit" value="Filter">
+    </form>
+
+
+    <!-- BONUS PART -->
+    <!--
+        <ul>
+            <li>
+                <a href="#all" class="selected">All</a>
+            </li>
+            <li>
+                <a href="#science">Science</a>
+            </li>
+            <li>
+                <a href="#politics">Politics</a>
+            </li>
+        </ul>
+    -->
+    <section id="trending"></section>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/app.js"></script>
+
+    <script>
+        const targetVariable = document.getElementById('trending');
+        console.log(targetVariable);
+
+        for (const article of articles) {
+            console.log(article);
+
+            //article
+            const article1 = document.createElement("article");
+            targetVariable.appendChild(article1);
+
+            //h3
+            const title1 = document.createElement("h3");
+            article1.appendChild(title1);
+            title1.textContent = article.title;
+
+            //p
+            // const paragraphe1 = document.createElement("p");
+            // article1.appendChild(paragraphe1);
+            // paragraphe1.textContent = article.paragraphe;
+
+
+            //description
+            const description = document.createElement("p");
+            article1.appendChild(description);
+            description.textContent = article.description;
+
+
+            //read more -a 
+            const url = document.createElement("a");
+            article1.appendChild(url);
+            // url.innerHTML = "read more";
+            url.textContent = "read more";
+            url.href = article.url;
+
+            // category
+            article1.classList.add(article.category);
+        }
+        function filter(event) {
+            // !!! Chiar e f important!!! o ora m-a incomodat
+            event.preventDefault();
+            //     const input = document.querySelectorAll('value="Filter"');
+            // trebuie valoares selectata din elementul select
+            // luam elementul select
+            const selectInput = document.getElementById("category");
+            const selectedValue = selectInput.value;
+            //     const valueInput = input.value;
+
+            // in continuare in pagina trebuie sa apara doar articolele care au article.category == selectedValue
+            // asta inseamna ca trebuie parcursi toti copiii (articolele) lui trending
+            // pt fiecare copil, daca nu are clasa selectata, e suficient sa facem display none
+            for (const article of targetVariable.children) {
+                if (article.className == selectedValue || selectedValue == "all") {
+                    article.style.display = "block";
+                } else {
+                    article.style.display = "none";
+                }
+            }
+
+
+        };
+        // const submit = document.querySelectorAll('[action="#trending"]'); 
+        // GRESIT SELECTORUL!!! cum selectezi butonul in css sa-l faci galben??? butonul are atribut action?
+        // + returneaza array deci trebuie submit[0]
+        const submit = document.querySelector('[type="submit"]');
+        // const submit = buttons[0]; cine e buttons?
+
+        submit.addEventListener("click", filter);
+
+    </script>
+</body>
+
+</html>
